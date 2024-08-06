@@ -3,9 +3,9 @@ import requests
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 
 # IBM Watsonx.ai text generation API details
-api_key = "fcVgEa4GHx-NpaCDIGgJGvWJC4JxLAzpab4yNhZiaAO1"  # Updated API key
+api_key = "_OtWEUKuRFovnjErgp0BQSh8sgSzJ8f_H63ZLGC43ayF"  # Updated API key
 url = "https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2023-05-29"
-project_id = "08ab863a-649b-465a-a3fa-41c4a9974ce9"
+project_id = "06a95679-80d6-4cd6-949f-015ccf509441"
 model_id = "meta-llama/llama-3-405b-instruct"
 
 def get_access_token(api_key):
@@ -36,6 +36,8 @@ def get_watson_response(prompt, access_token):
         "parameters": {
             "decoding_method": "greedy",
             "max_new_tokens": 900,
+            "min_new_tokens": 0,
+            "stop_sequences": [],
             "repetition_penalty": 1
         },
         "model_id": model_id,
@@ -62,6 +64,16 @@ st.title('Marketing Email Generator - SBA Info Solutions')
 
 if 'chat_history' not in st.session_state:
     st.session_state.chat_history = []
+
+st.write("""
+**Requirement Text:**
+Please provide the following details for generating a marketing email:
+- Product or service name
+- Target audience
+- Key benefits or features
+- Call to action (e.g., visit our website, sign up now, etc.)
+- Any additional information or special offers
+""")
 
 user_input = st.text_area("Enter the details for the marketing email:")
 
