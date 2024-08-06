@@ -5,8 +5,8 @@ from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 # IBM Watsonx.ai text generation API details
 api_key = "_OtWEUKuRFovnjErgp0BQSh8sgSzJ8f_H63ZLGC43ayF"  # Updated API key
 url = "https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2023-05-29"
-project_id = "06a95679-80d6-4cd6-949f-015ccf509441"
-model_id = "meta-llama/llama-3-405b-instruct"
+project_id = "06a95679-80d6-4cd6-949f-015ccf509441"  # Updated project ID
+model_id = "meta-llama/llama-3-405b-instruct"  # Updated model ID
 
 def get_access_token(api_key):
     auth_url = "https://iam.cloud.ibm.com/identity/token"
