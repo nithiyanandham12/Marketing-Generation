@@ -3,9 +3,9 @@ import requests
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 
 # IBM Watsonx.ai text generation API details
-api_key = "_OtWEUKuRFovnjErgp0BQSh8sgSzJ8f_H63ZLGC43ayF"  # Updated API key
+api_key = "jUGpPn1TSS6KkLC_L7J4S_s6k4vh2xt96SDJUL-tu-lv"
 url = "https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2023-05-29"
-project_id = "06a95679-80d6-4cd6-949f-015ccf509441"
+project_id = "3d6f1050-fa3f-4017-87d1-767f18a4a7fd"
 model_id = "meta-llama/llama-3-405b-instruct"
 
 def get_access_token(api_key):
@@ -35,7 +35,7 @@ def get_watson_response(prompt, access_token):
         "input": prompt,
         "parameters": {
             "decoding_method": "greedy",
-            "max_new_tokens": 900,
+            "max_new_tokens": 300,  # Adjusted token limit for concise responses
             "repetition_penalty": 1
         },
         "model_id": model_id,
@@ -63,14 +63,35 @@ st.title('Marketing Email Generator - SBA Info Solutions')
 if 'chat_history' not in st.session_state:
     st.session_state.chat_history = []
 
-user_input = st.text_area("Enter the details for the marketing email:")
+with st.form(key='email_form'):
+    st.header('Enter the details for the marketing email:')
+    
+    product_name = st.text_input("Product Name")
+    target_audience = st.text_input("Target Audience")
+    main_features = st.text_area("Main Features (comma-separated)")
+    offer_details = st.text_area("Offer Details")
+    call_to_action = st.text_input("Call to Action")
 
-if st.button("Generate Email"):
-    if user_input:
-        st.session_state.chat_history.append(f"User Input: {user_input}")
+    submit_button = st.form_submit_button(label='Generate Email')
+
+if submit_button:
+    if all([product_name, target_audience, main_features, offer_details, call_to_action]):
+        user_input = f"""
+        Generate a marketing email with the following details:
+        Product Name: {product_name}
+        Target Audience: {target_audience}
+        Main Features: {main_features}
+        Offer Details: {offer_details}
+        Call to Action: {call_to_action}
+        """
+        st.session_state.chat_history.append(f"User Input: {user_input.strip()}")
+
+        response = get_watson_response(user_input.strip(), access_token)
         
-        response = get_watson_response(user_input, access_token)
-        st.session_state.chat_history.append(f"Generated Email: {response}")
+        # Generate email subject based on the product name and main features
+        email_subject = f"Introducing {product_name} - {main_features.split(',')[0]}!"
+
+        st.session_state.chat_history.append(f"Generated Email:\n\nSubject: {email_subject}\n\n{response}")
 
 if st.session_state.chat_history:
     for message in st.session_state.chat_history:
