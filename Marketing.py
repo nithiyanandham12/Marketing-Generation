@@ -3,9 +3,9 @@ import requests
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 
 # IBM Watsonx.ai text generation API details
-api_key = "RovJ3yu0O4wdEPdP2tt2mfJ-2TQhQA03G_VuHCQRL51F"
+api_key = "TYYZG3iyKbYxxns35ZTdcpZpANr9BiEh7zpbemlTIXM0"
 url = "https://us-south.ml.cloud.ibm.com/ml/v1/text/generation?version=2023-05-29"
-project_id = "3d6f1050-fa3f-4017-87d1-767f18a4a7fd"
+project_id = "8a699899-a177-47e4-8c9f-1c018d07dc8"
 model_id = "google/flan-t5-xxl"
 
 def get_access_token(api_key):
